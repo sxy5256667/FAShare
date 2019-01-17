@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="{{ url_for('static', filename='css/carousel.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/cart.css') }}" rel="stylesheet">
+
+        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script src="https://rawgit.com/dbrekalo/fastselect/master/dist/fastselect.standalone.min.js"></script>
+        <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+
+        <title>{{ title }}</title>
+        <style>
+            .carousel-inner > .item >img{
+              height :800px;
+            }
+            body{
+                padding-top: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark py-2 my-2">
+            <a class="navbar-brand" href="{{ url_for('main') }}">FAshare</a>
+
+            <form class="form-inline mr-auto" method="POST" action="{{ url_for('search') }}" enctype="multipart/form-data">
+                <div class="input-group">
+                    <input type="text" id="search" name ="search" class="form-control" placeholder="Search for article" style="width: 240%">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+            {% if login != True %}
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav pull-right">
+                        <li class="nav-item active">
+                            <a class="nav-link">Please Login First: </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link"> | </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('register') }}">Sign Up</a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if login == True %}
+                <li class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav pull-right my-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('personalmainpage',username=username) }}">Hi, {{ username }}! </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link"> | </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('personalmainpage',username=username) }}"> MyInfo </a>
+                        </li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link" href="{{ url_for('personal_wish',username=username, id=0) }}">Wish List</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+        </nav>
+
+    <div id="content">{% block content %}{% endblock %}</div>
+
+    <div id="footer" class="bg-secondary py-2 my-2" style="margin-top: 20px">
+        <!-- FOOTER -->
+        <footer class="container pt-3 text-light">
+            <p class="text-center">&copy; 2017-2018 FAshare Fashion </p>
+            <p class="text-center"> &middot; <a class="text-light" href="#">Privacy</a> &middot; <a class="text-light" href="#">Terms</a></p>
+        </footer>
+    </div>
+  </body>
+</html>

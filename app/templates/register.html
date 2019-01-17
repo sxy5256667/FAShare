@@ -1,0 +1,237 @@
+{% extends "layout_auth.html" %}
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+    <style>
+    body{
+        class: text-align;
+    }
+    .form-label-group {
+            margin-bottom: 2px;
+        }
+    .text-label{
+        text-align: left;
+        margin-bottom: 0;
+    }
+    .alert-danger{
+            background-color: transparent;
+            border-color: transparent
+        }
+    .alert{
+        padding: 0; text-align: left; margin-bottom: 0
+    }
+    .row{
+        width: 100%;
+        margin: 0 0 0 0;
+    }
+    .font{
+        font-family: "Lucida Blackletter", eufm10, blackletter;
+    }
+    .glyphicon{
+        inline-height:0;
+        font-size: small;
+    }
+    .glyphicon-remove {
+        color: red;
+    }
+    .glyphicon-remove:before {
+        position: relative;
+    }
+    .glyphicon-ok {
+        color: green;
+    }
+    .glyphicon-ok:before {
+        position: relative;
+    }
+    .col{
+        border-style: ridge;
+        border-left: none;
+        border-right: none;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .row-border{
+        border-style: ridge;
+        border-left: none;
+        border-right: none;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        text-align: left;
+    }
+    .row-tb{
+        margin: 2px 0px 2px 0px ;
+    }
+    </style>
+    <body class="text-align">
+        <form class="form-signin" method="post" action="{{ url_for('register') }}">
+            <div class="text-center mb-4">
+                <img class="mb-4" src="http://cdn.shopify.com/s/files/1/0010/4225/1812/products/101775_1.jpg?v=1532503793" alt="" width="72" height="72">
+                <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+            </div>
+                {% if errorCreateUser %}
+                    <div class="alert alert-danger">{{ errorMessage }}</div>
+                {% endif %}
+            <div class="form-label-group">
+                <p class="text-label text-muted">username: </p>
+                <label for="username" class="sr-only">username</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Please enter username" value="{{ username }}">
+                <div class="row row-border" id="message_1">
+                    <span id="message_1_user" class='text-label glyphicon glyphicon-remove' aria-hidden="true"><i class="font"> 0-9,a-z A-Z and "_" only</i></span>
+                </div>
+            </div>
+            <div class="form-label-group">
+                <p class="text-label text-muted">email: </p>
+                <input type="text" name="email" id="email" class="form-control" placeholder="Please enter email address" value="{{ email }}">
+                    <div class="row row-border" id="message_2">
+                        <span id="message_2_email" class='text-label glyphicon glyphicon-remove' aria-hidden="true"><i>me@example.com</i></span>
+                    </div>
+            </div>
+            <div class="form-label-group">
+                <p class="text-label text-muted">password: </p>
+                    <input name="password" placeholder="Please enter password" type ="password" class="form-control" style="margin-bottom: 0" id = "password" value="{{ password }}">
+                    <div class="col" id="message_3">
+                        <div class="row row-tb">
+                            <span id="message_3_lower" class='glyphicon glyphicon-remove text-label' aria-hidden="true"><i class="font"> lowercase required</i></span>
+                        </div>
+                        <div class="row row-tb">
+                            <span id="message_3_upper" class='glyphicon glyphicon-remove text-label' aria-hidden="true"><i class="font"> uppercase required</i></span>
+                        </div>
+                        <div class="row row-tb">
+                            <span id="message_3_number" class='glyphicon glyphicon-remove text-label' aria-hidden="true"><i class="font"> number required</i></span>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-label-group">
+                <p class="text-label text-muted" id="re_password">password again: </p>
+                    <input name="password2" placeholder="Please re-enter password" type ="password" class="form-control" id = "password2" value="{{ password2 }}">
+                    <div class="row row-border" id="message_4">
+                        <span id="message_4_repass" class='glyphicon glyphicon-remove text-label' aria-hidden="true"><i id="match"> entered password does not match</i></span>
+                    </div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" id="register">Sign Up</button>
+            <p class="text-label text-muted" style="margin-top: 1rem">Already have an account?</p>
+            <a class="btn btn-outline-secondary btn-block" href="{{ url_for('login')}}">Sign In</a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        </form>
+    </body>
+    <script>
+    var usn = document.getElementById('username');
+    var msg1 = document.getElementById('message_1');
+    var msg_user = document.getElementById('message_1_user');
+    var pattern1 = /(\w+)/;
+    checkusername(usn, msg1, msg_user, pattern1);
+
+    var eml = document.getElementById('email');
+    var msg2 = document.getElementById('message_2');
+    var msg2_e = document.getElementById('message_2_email')
+    var pattern2 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    checkemail(eml, msg2, msg2_e, pattern2);
+
+    psw = document.getElementById('password');
+    var msg3 = document.getElementById('message_3');
+    var msg3_1 = document.getElementById('message_3_lower');
+    var msg3_2 = document.getElementById('message_3_upper');
+    var msg3_3 = document.getElementById('message_3_number');
+    checkuserpass(psw, msg3, msg3_1, msg3_2, msg3_3);
+
+    var re_psw = document.getElementById('password2');
+    var msg4 = document.getElementById('message_4');
+    var msg4_re = document.getElementById('message_4_repass');
+    var match = document.getElementById('match');
+    checkpassword(psw, re_psw, msg4, msg4_re, match);
+
+    function checkuserpass(id1, id2, id2_1, id2_2, id2_3) {
+        id2.style.display="none";
+        id1.onfocus = function() {
+            id2.style.display = "block";
+        };
+        id1.onkeyup = function() {
+            var input = id1.value;
+            var lower = /[a-z]/g;
+            var upper = /[A-Z]/g;
+            var number = /[0-9]/g;
+            if (input.match(lower)){
+                id2_1.classList.remove('glyphicon-remove');
+                id2_1.classList.add('glyphicon-ok');
+            }
+            else{
+                id2_1.classList.remove('glyphicon-ok');
+                id2_1.classList.add('glyphicon-remove');
+            }
+            if (input.match(upper)){
+                id2_2.classList.remove('glyphicon-remove');
+                id2_2.classList.add('glyphicon-ok');
+            }
+            else{
+                id2_2.classList.remove('glyphicon-ok');
+                id2_2.classList.add('glyphicon-remove');
+            }
+            if (input.match(number)){
+                id2_3.classList.remove('glyphicon-remove');
+                id2_3.classList.add('glyphicon-ok');
+            }
+            else{
+                id2_3.classList.remove('glyphicon-ok');
+                id2_3.classList.add('glyphicon-remove');
+            }
+        }
+
+    }
+    function checkusername(id1, id2, id2_1, pattern) {
+        id2.style.display="none";
+        id1.onfocus = function() {
+            id2.style.display = "block";
+        };
+        id1.onkeyup = function() {
+            var input = id1.value;
+            if (input.match(pattern)[0] === input){
+                id2_1.classList.remove('glyphicon-remove');
+                id2_1.classList.add('glyphicon-ok');
+            }
+            else{
+                id2_1.classList.remove('glyphicon-ok');
+                id2_1.classList.add('glyphicon-remove');
+            }
+        }
+    }
+    function checkemail(id1, id2, id2_1, pattern){
+        console.log('enter');
+        id2.style.display="none";
+        id1.onfocus = function() {
+            id2.style.display = "block";
+        };
+        id1.onkeyup = function() {
+            if (id1.value.match(pattern)){
+                id2_1.classList.remove('glyphicon-remove');
+                id2_1.classList.add('glyphicon-ok');
+            }
+            else{
+                id2_1.classList.remove('glyphicon-ok');
+                id2_1.classList.add('glyphicon-remove');
+            }
+        }
+    }
+    function checkpassword(password, re_password, msg4, msg4_1, match){
+        msg4.style.display="none";
+        re_password.onfocus = function() {
+            msg4.style.display = "block";
+        };
+        re_password.onkeyup = function() {
+            var pass = password.value;
+            console.log(pass);
+            var repass = re_password.value;
+            if (repass === pass){
+                msg4_1.classList.remove('glyphicon-remove');
+                msg4_1.classList.add('glyphicon-ok');
+                match.innerHTML = 'passwords match!';
+            }
+            else{
+                msg4_1.classList.remove('glyphicon-ok');
+                msg4_1.classList.add('glyphicon-remove');
+                match.innerHTML = 'entered password does not match';
+            }
+        }
+    }
+    </script>
+{% endblock %}

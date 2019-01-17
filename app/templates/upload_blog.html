@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <link href="{{ url_for('static', filename='css/item.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fastselect.min.css') }}" rel="stylesheet">
+
+    <style>
+            .fstElement { font-size: 0.8em; padding: 0; margin: 5px 0; border-radius: 5px;}
+            .fstToggleBtn { min-width: 3em; }
+            .submitBtn { display: none; }
+            .fstMultipleMode { display: block; }
+            .fstMultipleMode .fstControls { width: 100%; margin: 0;}
+            .fstMultipleMode .fstControls .fstChoiceItem{  margin: 0 3px 0 1px; padding: 2px 3px 2px 20px; }
+    </style>
+
+	<div class="container">
+		<div class="card mt-0 p-3">
+			<div class="container-fliud" >
+                <form class="form-signin" method="post" action="{{ url_for('upload_blog', username = username) }}" enctype="multipart/form-data">
+                    <div class="wrapper row">
+                        <h3 class="product-title mx-auto pt-5">Upload New Blog</h3>
+                    </div>
+                    {% if error %}
+                        <div class="alert alert-danger">{{errorMessage}}</div>
+                    {% endif %}
+
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_title" class="pull-right h4">Title: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="blog_title" id="blog_title" class="form-control" placeholder="Blog Tile" value="{{ blog_title }}">
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    <div class="wrapper row">
+                        {% if errorLogin %}
+                            <div class="alert alert-danger mx-auto">{{errorMessage}}</div>
+                        {% endif %}
+                    </div>
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_abs" class="pull-right h4">Abstract: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea name="blog_abs" id="blog_abs" class="form-control" cols="50" rows="3" placeholder="Blog Abstract...">{{ ads }}</textarea>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_title" class="pull-right h4">Photos: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="file" name="upload_photo" class="my-3 pull-left">
+                            <input type="submit" name="upload_form" value="upload_photo" class="pull-right my-3">
+                            <textarea readonly cols="50" rows="3" class="form-control p-2 border border-secondary" style="line-height: 1.3; font-size: 1em; border: none; margin: 0; padding: 0;"
+                            >{% for key, value in images.items() %}{{ key }} &#010;{% endfor %}</textarea>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_tags" class="pull-right h4">Tags: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="demo" id="blog_tags" multiple name="blog_tags">
+                                {% for t in tag %}
+                                    <option value="{{ t }}">{{ t }}</option>
+                                {% endfor %}
+                            </select>
+                            <script>
+                                $('.demo').fastselect();
+                            </script>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_cont" class="pull-right h4">Content: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea name="blog_cont" id="blog_cont" class="form-control" cols="50" rows="15" placeholder="Blog Content...">{{ content }}</textarea>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_products" class="pull-right h4">Ptoducts Used: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="demo" id="blog_products" name="blog_products" multiple>
+                                {% for item in items %}
+                                    <option value="{{ item['item_name'] }}">{{ item['item_name'] }}</option>
+                                {% endfor %}
+                            </select>
+                            <p> Cannot find the product? <a href="{{ url_for('upload_item') }}"> Create One</a></p>
+                            <script>
+                                $('.demo').fastselect();
+                            </script>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                     <div class="wrapper row">
+                        <div class="mx-auto pb-5">
+                            <input type="submit" name="upload_form" value="upload_all" class="btn btn-success">
+                            <a class="btn btn-danger" href="{{ url_for('personalmainpage',username=username) }}">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+    <style>
+
+    </style>
+
+
+
+
+{% endblock %}

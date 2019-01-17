@@ -1,0 +1,44 @@
+{% extends "layout_auth.html" %}
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+    <style>
+        .form-label-group {
+            margin-bottom: 2px;
+        }
+        .text-label{
+            text-align: left;
+            margin-bottom: 0;
+        }
+        .alert-danger{
+            background-color: transparent;
+            border-color: transparent
+        }
+        .alert{
+            padding: 0; text-align: left; margin-bottom: 0
+        }
+    </style>
+    <body class="text-align">
+        <form class="form-signin" method="post" action="{{ url_for('login') }}">
+            <div class="text-center mb-4">
+                <img class="mb-4" src="http://cdn.shopify.com/s/files/1/0010/4225/1812/products/101775_1.jpg?v=1532503793" alt="" width="72" height="72">
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            </div>
+            {% if errorLogin %}
+                <div class="alert alert-danger">{{errorMessage}}</div>
+            {% endif %}
+            <div class="form-label-group">
+                <label for="username" class="sr-only">Username</label>
+                <br>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="{{ username }}">
+            </div>
+            <div class="form-label-group">
+                <label for="password" class="sr-only">Password:</label>
+                <input placeholder="Password" name="password" type ="password" class="form-control" id = "password" value="{{password}}">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" href="{{ url_for('main')}}">Sign In</button>
+            <p class="text-label text-muted" style="margin-top: 1rem">New to Us>>></p>
+            <a class="btn btn-outline-secondary btn-block"  href={{ url_for('register') }}>Sign Up</a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        </form>
+    </body>
+{% endblock %}

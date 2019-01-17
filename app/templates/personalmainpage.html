@@ -1,0 +1,76 @@
+{% extends 'layout_person.html' %}
+{% block aside %}
+<style>
+.form-label-group{
+    max-width: 40%;
+    margin: auto;
+    margin-bottom: 2px;
+}
+p{
+    margin: 0 0 0 0;
+    text-align: left;
+    }
+
+.card {
+     background: #eee;
+    padding: 1em;
+    line-height: 1em;
+}
+
+a.custom-card,
+a.custom-card:hover {
+          color: inherit;
+          text-decoration: none;
+        }
+</style>
+<aside class="col-lg-20">
+    <div class="row">
+        <div class="h2 mx-auto">View History</div>
+    </div>
+    <div class="row m-3 border-top border-dark mt-1"></div>
+    {% if history %}
+        <div class="text-center text-secondary h3" style="height: 40%"><em>Please Enjoy More Blogs!</em></div>
+    {% else %}
+    <div class="row m-3">
+        {% for blog in his_blogs %}
+            <div class="col-3 p-1">
+                <div class="card m-2">
+                    <a href="{{ url_for('blog_web', blog_title=blog['blog_title']) }}" class="custom-card">
+                        <img class="card-img-top" style="height: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" src="{{ blog['photos'] }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 1.5em; overflow: hidden; text-overflow: ellipsis;">{{ blog['blog_title'] }}</h5>
+                            <div class="border-top border-dark my-2"></div>
+                            <p class="card-text" style="height: 3em; line-height: 1em; overflow: hidden; font-size: 1.2em;">{{ blog['abstract'] }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="h2 mx-auto">Liked Blog</div>
+    </div>
+    <div class="row m-3 border-top border-dark mt-1"></div>
+    {% if liked %}
+        <div class="text-center text-secondary h3"><em>Please Like More Blogs!</em></div>
+    {% else %}
+    <div class="row p-3">
+        {% for blog in liked_blogs %}
+            <div class="col-3 p-1">
+                <div class="card m-2">
+                    <a href="{{ url_for('blog_web', blog_title=blog['blog_title']) }}" class="custom-card">
+                        <img class="card-img-top" style="height: 200px" src="{{ blog['photos'] }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog['blog_title'] }}</h5>
+                            <div class="border-top border-dark my-2"></div>
+                            <p class="card-text" style="height: 3em; overflow: hidden; font-size: 1.5em;">{{ blog['abstract'] }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</aside>
+{% endblock %}

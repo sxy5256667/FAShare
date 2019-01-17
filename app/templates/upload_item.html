@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <link href="{{ url_for('static', filename='css/item.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fastselect.min.css') }}" rel="stylesheet">
+
+    <style>
+            .fstElement { font-size: 0.8em; padding: 0; margin: 5px 0; border-radius: 5px;}
+            .fstToggleBtn { min-width: 3em; }
+            .submitBtn { display: none; }
+            .fstMultipleMode { display: block; }
+            .fstMultipleMode .fstControls { width: 100%; margin: 0;}
+            .fstMultipleMode .fstControls .fstChoiceItem{  margin: 0 3px 0 1px; padding: 2px 3px 2px 20px; }
+    </style>
+
+	<div class="container">
+		<div class="card mt-0 p-3">
+			<div class="container-fliud" >
+                <form class="form-signin" method="post" action="{{ url_for('upload_item') }}" enctype="multipart/form-data">
+                    <div class="wrapper row">
+                        <h3 class="product-title mx-auto pt-5">Upload New Product</h3>
+                    </div>
+                    {% if error %}
+                        <div class="alert alert-danger">{{errorMessage}}</div>
+                    {% endif %}
+
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="item_title" class="pull-right h4">Product Name: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="item_title" id="item_title" class="form-control" placeholder="Product Name" value="{{ item_name }}">
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="blog_title" class="pull-right h4">Product Image: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="file" name="upload_photo" class="my-3 pull-left">
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="item_brand" class="pull-right h4">Product Brand: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="item_brand" id="item_brand" class="form-control" placeholder="Item Brand" value="{{ brand }}">
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="item_brand" class="pull-right h4">Product Price: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="item_price" id="item_price" class="form-control" placeholder="Item Price" value="{{ price }}">
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                    <div class="wrapper row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="item_brand" class="pull-right h4">Product Link: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="item_link" id="item_link" class="form-control" placeholder="Item Link" value="{{ link }}">
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+
+                     <div class="wrapper row">
+                        <div class="mx-auto pb-5">
+                            <input type="submit" name="upload_form" value="upload_all" class="btn btn-success">
+                            <a class="btn btn-danger " href="{{ url_for('upload_blog', username = username) }}">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+    <style>
+
+    </style>
+
+
+
+
+{% endblock %}

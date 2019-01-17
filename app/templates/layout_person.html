@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/person-info.css') }}">
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<style>
+li{
+    color: #5a5a5a;
+}
+
+.col{
+    padding: 0 0 2px 0;
+    height: fit-content;
+}
+
+
+.text-left{
+    text-align: left;
+
+   }
+
+
+.col-sm-2 {
+    width: 20%;
+
+    }
+
+.col-3 {
+
+    position: relative;
+    width: 80%;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 50px;
+
+}
+</style>
+<div style="width: 100%; padding-left: 0; padding-right: 15px; margin: 0 0 0 0;">
+    <div class="mail-box">
+        <aside class="col-sm-2 border-right" style="background-color: transparent; height: fit-content">
+            <ul class="user-head text-center mb-2 bg-light border-bottom">
+                <li class="mb-2">
+                    <img style="border-radius: 50%" src="http://cdn.shopify.com/s/files/1/0010/4225/1812/products/101775_1.jpg?v=1532503793" alt="" width="100" height="100">
+                </li>
+                <ul class="nav justify-content-center">
+                    <li class="col">
+                        <p style="text-align: right">{{ username }}</p>
+                    </li>
+                    <li class="col-md-auto" style="padding: 0 5px 0 5px">
+                        <p> | </p>
+                    </li>
+                    <li class="col" style="text-align: left">
+                        <a style="padding: 0 0 0 0" href="{{ url_for('editinfo', username=username) }}">Edit Profile</a>
+                    </li>
+                </ul>
+                <li class="mb-0">
+                    {{ email }}
+                </li>
+                <li class="mb-0">
+                    {{ birthday }}
+                </li>
+            </ul>
+
+            <form class="inbox-body" action="{{ url_for('upload_blog', username = username) }}">
+                <button type="submit" class="btn btn-danger btn-block">
+                    Upload Blog
+                </button>
+            </form>
+            <ul class="inbox-nav inbox-divider bg-light border-top" style="border-bottom: 0">
+                <li>
+                    <a href="{{ url_for('personalblog',username=username, id=0) }}"><span class="glyphicon glyphicon-plus"></span> My Blog </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('personalhis',username=username, id=0)}}"><span class="glyphicon glyphicon-star"></span> History </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('personallike',username=username, id=0) }}"><span class="glyphicon glyphicon-thumbs-up"></span> Liked </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('personal_wish',username=username, id=0) }}"><span class="glyphicon glyphicon-heart"></span> Wishlist </a>
+                </li>
+            </ul>
+        </aside>
+        {% block aside %}{% endblock %}
+    </div>
+</div>
+
+{% endblock %}
+
+

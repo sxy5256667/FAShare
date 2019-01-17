@@ -1,0 +1,37 @@
+{% extends 'layout_person.html' %}
+{% block aside %}
+<link href="{{ url_for('static', filename='css/fastselect.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/item.css') }}" rel="stylesheet">
+<style>
+.form-signin{
+    max-width: 40%;
+    margin: auto;
+    margin-bottom: 2px;
+}
+p{
+    margin: 0 0 0 0;
+    text-align: left;
+}
+</style>
+<aside class="lg-side text-center border">
+    <form class="form-signin" method="post" action="{{ url_for('editinfo', username=username) }} ">
+        <div class="text-center mb-4">
+            <img class="mb-4" src="http://cdn.shopify.com/s/files/1/0010/4225/1812/products/101775_1.jpg?v=1532503793" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Personal Information</h1>
+        </div>
+        {% if Update_state %}
+                <div class="alert alert-danger">{{UpdateMessage}}</div>
+        {% endif %}
+        <div class="form-label-group">
+            <p class="text-label text-muted">Email: </p>
+            <input type="email" name="new_email" id="new_email" class="form-control" placeholder="Please enter email address" value="{{ email }}">
+        </div>
+        <div class="col-form-label">
+            <p class="text-label text-muted">Birthday: </p>
+            <input type="date" class="form-control" name="birthday" value="{{ birthday }}">
+        </div>
+        <button class="btn btn-outline-secondary" type="submit" href="{{ url_for('editinfo',username=username) }}">Update</button>
+    </form>
+
+</aside>
+{% endblock %}
